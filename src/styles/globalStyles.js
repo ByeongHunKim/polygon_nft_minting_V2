@@ -38,13 +38,14 @@ export const SpacerLarge = styled.div`
 
 // Used for providing a wrapper around a component
 export const Container = styled.div`
-  display: flex;
+  padding: 50px;
   flex: ${({ flex }) => (flex ? flex : 0)};
   flex-direction: ${({ fd }) => (fd ? fd : "column")};
   justify-content: ${({ jc }) => (jc ? jc : "flex-start")};
   align-items: ${({ ai }) => (ai ? ai : "flex-start")};
   background-color: ${({ test }) => (test ? "pink" : "none")};
-  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
   background-image: ${({ image }) => (image ? `url(${image})` : "none")};
   background-size: cover;
   background-position: center;
@@ -81,4 +82,72 @@ export const StyledStartView = styled.div`
   background-color: #f5f6fa;
   width: 100%;
   min-height: 100vh;
+`;
+
+export const Styledpage = styled.div`
+  display: felx;
+  padding: 20px;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  // justify-content: space-between;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #f5f6fa;
+`;
+
+export const StyledContent = styled.div`
+  position: relative;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  width: ${({ wd }) => (wd ? wd : "50%")};
+  height: 96vh;
+`;
+
+export const StyledNftCard = styled.div`
+  display: block;
+  margin: 4vh auto;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  height: 90%;
+  border-radius: 20px;
+  background-color: ${({ bw }) => (bw ? "#fff" : "none")};
+  box-shadow: 0 3px 20px rgb(0 0 0 / 16%);
+`;
+
+export const StyledNftTitle = styled.div`
+  margin: 5vh auto;
+  display: block;
+  text-align: center;
+  width: ${({ wd }) => (wd ? wd : "50%")};
+  font-size: 40px;
+`;
+
+export const StyledNftContractinfo = styled.div`
+  margin: 5vh auto;
+  display: block;
+  text-align: center;
+  font-size: 40px;
+  font-size: ${({ fs }) => (fs ? fs : "40px")};
+`;
+
+export const StyledNftBuyButton = styled.div`
+  // position: absolute;
+  margin: 5vh auto;
+  display: block;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  padding: 30px;
+  font-weight: bold;
+  border: none;
+  border-radius: 50px;
+  font-size: 40px;
+  box-shadow: 0 3px 20px rgb(0 0 0 / 16%);
+  // transform: translateY(380px);
+  width: 100%;
 `;
