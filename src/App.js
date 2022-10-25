@@ -12,10 +12,10 @@ export const StyledButton = styled.button`
   padding: 10px;
   border-radius: 50px;
   border: none;
-  background-color: var(--secondary);
+  background-color: #fff;
   padding: 10px;
   font-weight: bold;
-  color: var(--secondary-text);
+  color: #000;
   width: 100px;
   cursor: pointer;
   box-shadow: 0px 6px 0px -2px rgba(250, 250, 250, 0.3);
@@ -26,6 +26,21 @@ export const StyledButton = styled.button`
     -webkit-box-shadow: none;
     -moz-box-shadow: none;
   }
+`;
+
+export const StyledConnectBtn = styled.button`
+  margin: 0 auto;
+  padding: 100px;
+  border-radius: 10px;
+  border: none;
+  background-color: #fff;
+  font-size: 40px;
+  font-weight: bold;
+  color: #000;
+  cursor: pointer;
+  box-shadow: 0 3px 20px rgb(0 0 0 / 16%);
+  display: flex;
+  align-items: center;
 `;
 
 export const StyledRoundButton = styled.button`
@@ -119,6 +134,7 @@ function App() {
     MARKETPLACE_LINK: "",
     SHOW_BACKGROUND: false,
   });
+  const [connectState, setConnectState] = useState(false);
 
   const claimNFTs = () => {
     let cost = CONFIG.WEI_COST;
@@ -193,29 +209,34 @@ function App() {
     getData();
   }, [blockchain.account]);
 
-  return (
+  const connectChange = () => {
+    setConnectState(true);
+  };
+
+  return connectState ? (
     <s.Screen>
       <s.Container
         flex={1}
         ai={"center"}
-        style={{ padding: 24, backgroundColor: "var(--primary)" }}
-        image={CONFIG.SHOW_BACKGROUND ? "/config/images/bg.png" : null}
+        // style={{ padding: 24, backgroundColor: "#f5f6fa" }}
+        style={{ padding: 24, backgroundColor: "#000" }}
       >
         {/* <a href={CONFIG.MARKETPLACE_LINK}>
-          <StyledLogo alt={"logo"} src={"/config/images/logo.png"} />
-        </a> */}
+            <StyledLogo alt={"logo"} src={"/config/images/logo.png"} />
+          </a> */}
         {/* <s.SpacerSmall /> */}
-        <ResponsiveWrapper flex={1} style={{ padding: 24 }} test>
+        <ResponsiveWrapper flex={1} style={{ padding: 24 }}>
           <s.Container
             flex={2}
             jc={"center"}
             ai={"center"}
             style={{
-              backgroundColor: "var(--accent)",
+              // backgroundColor: "white",
+              backgroundColor: "black",
               padding: 24,
               borderRadius: 24,
-              border: "4px dashed var(--secondary)",
-              boxShadow: "0px 5px 11px 2px rgba(0,0,0,0.7)",
+              // border: "4px dashed var(--secondary)",
+              boxShadow: "0px 5px 11px 2px rgba(0,0,0,0.3)",
             }}
           >
             <s.TextTitle
@@ -309,15 +330,15 @@ function App() {
                       Connect to the {CONFIG.NETWORK.NAME} network
                     </s.TextDescription>
                     <s.SpacerSmall />
-                    <StyledButton
-                      onClick={(e) => {
-                        e.preventDefault();
-                        dispatch(connect());
-                        getData();
-                      }}
-                    >
-                      CONNECT
-                    </StyledButton>
+                    {/* <StyledConnectBtn
+                        onClick={(e) => {
+                          e.preventDefault();
+                          dispatch(connect());
+                          getData();
+                        }}
+                      >
+                        뽑기 시작
+                      </StyledConnectBtn> */}
                     {blockchain.errorMsg !== "" ? (
                       <>
                         <s.SpacerSmall />
@@ -395,6 +416,19 @@ function App() {
         </ResponsiveWrapper>
       </s.Container>
     </s.Screen>
+  ) : (
+    <s.StyledStartView>
+      <StyledConnectBtn
+        onClick={(e) => {
+          e.preventDefault();
+          dispatch(connect());
+          getData();
+          connectChange();
+        }}
+      >
+        YGBS-NFT
+      </StyledConnectBtn>
+    </s.StyledStartView>
   );
 }
 

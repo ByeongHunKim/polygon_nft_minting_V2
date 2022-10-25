@@ -74,3 +74,11 @@ export const StyledClickable = styled.div`
     opacity: 0.6;
   }
 `;
+
+export const StyledStartView = styled.div`
+  display: felx;
+  padding: 20%;
+  background-color: #f5f6fa;
+  width: 100%;
+  min-height: 100vh;
+`;
