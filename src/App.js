@@ -4,6 +4,8 @@ import { connect } from "./redux/blockchain/blockchainActions";
 import { fetchData } from "./redux/data/dataActions";
 import * as s from "./styles/globalStyles";
 import styled from "styled-components";
+import web3 from "web3";
+// import loadingImg from "../public/";
 
 const truncate = (input, len) =>
   input.length > len ? `${input.substring(0, len)}...` : input;
@@ -136,6 +138,8 @@ function App() {
   });
   const [connectState, setConnectState] = useState(false);
   const [isLoading, setisLoading] = useState(false);
+  const [polygonUrl, setpolygonUrl] = useState(false);
+  const [test, setTest] = useState("");
 
   const claimNFTs = () => {
     let cost = CONFIG.WEI_COST;
@@ -144,7 +148,8 @@ function App() {
     let totalGasLimit = String(gasLimit * mintAmount);
     console.log("Cost: ", totalCostWei);
     console.log("Gas limit: ", totalGasLimit);
-    setFeedback(`Minting your ${CONFIG.NFT_NAME}...`);
+    setFeedback(`Minting your ${CONFIG.NFT_NAME}`);
+    setisLoading(true); //loading이미지 출력
     setClaimingNft(true);
     blockchain.smartContract.methods
       .mint(blockchain.account, mintAmount)
@@ -156,13 +161,18 @@ function App() {
       })
       .once("error", (err) => {
         console.log(err);
+        setisLoading(false); //loading이미지 출력
         setFeedback("Sorry, something went wrong please try again later.");
         setClaimingNft(false);
       })
       .then((receipt) => {
         console.log(receipt);
+        setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
+        setisLoading(false); //loading이미지 출력
+        setpolygonUrl(true); //폴리곤 사이트 아이콘
         setFeedback(
-          `WOW, the ${CONFIG.NFT_NAME} is yours! go visit Opensea.io to view it.`
+          `${CONFIG.NFT_NAME} is yours! go visit PolygonScan to view it.`
+          // `NFT is yours! go visit PolygonScan to view it.`
         );
         setClaimingNft(false);
         dispatch(fetchData(blockchain.account));
@@ -188,6 +198,7 @@ function App() {
   const getData = () => {
     if (blockchain.account !== "" && blockchain.smartContract !== null) {
       dispatch(fetchData(blockchain.account));
+      console.log("blockchain.account: ", blockchain.account);
     }
   };
 
@@ -224,10 +235,28 @@ function App() {
         <s.StyledNftContractinfo fs={"90px"}>
           {data.totalSupply} / {CONFIG.MAX_SUPPLY}
         </s.StyledNftContractinfo>
-        <s.StyledNftContractinfo>
+        <s.StyledNftContractinfo fs={"30px"}>
           {CONFIG.CONTRACT_ADDRESS}
         </s.StyledNftContractinfo>
         <s.StyledNftContractinfo>{feedback}</s.StyledNftContractinfo>
+        <s.StyledNftContractinfo>
+          {isLoading ? (
+            <img
+              alt="now loading..."
+              src="loading.gif"
+              style={{ margin: "1rem" }}
+            />
+          ) : polygonUrl ? (
+            <s.StyledHashLink>
+              <s.StyledHashURL>
+                transactionID{" "}
+                <a href={test} target="_blank">
+                  {test}
+                </a>
+              </s.StyledHashURL>
+            </s.StyledHashLink>
+          ) : null}
+        </s.StyledNftContractinfo>
         <s.StyledNftBuyButton
           disabled={claimingNft ? 1 : 0}
           onClick={(e) => {

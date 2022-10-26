@@ -151,3 +151,20 @@ export const StyledNftBuyButton = styled.div`
   // transform: translateY(380px);
   width: 100%;
 `;
+
+export const StyledHashLink = styled.div`
+  padding: 20px;
+  display: block;
+  border-radius: 10px;
+  box-shadow: 0 3px 20px rgb(0 0 0 / 6%);
+  background-color: #fff;
+  font-size: 20px;
+`;
+
+export const StyledHashURL = styled.p`
+  display: block;
+  width: 100%;
+  font-size: 20px;
+  // background-color: #000;
+  overflow: hidden;
+`;
