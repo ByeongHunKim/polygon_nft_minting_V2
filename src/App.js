@@ -170,7 +170,11 @@ function App() {
         console.log(receipt.events);
         console.log(receipt.events.Transfer);
         console.log(receipt.events.Transfer.returnValues.tokenId);
-        setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
+        let tokenId = receipt.events.Transfer.returnValues.tokenId;
+        console.log("tokenId : ", tokenId);
+        // setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
+        setTest("https://gateway.pinata.cloud/ipfs/QmaT64tYpxj6rxmQVhAwhevqB8HCE8PKGcf8sBv8JGyF6M/" + tokenId + ".png");
+        
         setisLoading(false); //loading이미지 출력
         setpolygonUrl(true); //폴리곤 사이트 아이콘
         setFeedback(
