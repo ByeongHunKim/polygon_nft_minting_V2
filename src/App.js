@@ -167,6 +167,9 @@ function App() {
       })
       .then((receipt) => {
         console.log(receipt);
+        console.log(receipt.events);
+        console.log(receipt.events.Transfer);
+        console.log(receipt.events.Transfer.returnValues.tokenId);
         setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
         setisLoading(false); //loading이미지 출력
         setpolygonUrl(true); //폴리곤 사이트 아이콘
