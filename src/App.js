@@ -174,7 +174,6 @@ function App() {
         console.log("tokenId : ", tokenId);
         // setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
         setTest("https://gateway.pinata.cloud/ipfs/QmaT64tYpxj6rxmQVhAwhevqB8HCE8PKGcf8sBv8JGyF6M/" + tokenId + ".png");
-        
         setisLoading(false); //loading이미지 출력
         setpolygonUrl(true); //폴리곤 사이트 아이콘
         setFeedback(
@@ -257,6 +256,7 @@ function App() {
             <s.StyledHashLink>
               <s.StyledHashURL>
                 transactionID{" "}
+                <img src={test} alt='nft' />
                 <a href={test} target="_blank">
                   {test}
                 </a>
