@@ -169,9 +169,11 @@ function App() {
       .then((receipt) => {
         console.log(receipt);
         console.log(receipt.events);
-        console.log(receipt.events.Transfer);
-        console.log(receipt.events.Transfer.returnValues.tokenId);
-        let tokenId = receipt.events.Transfer.returnValues.tokenId;
+        // console.log(receipt.events.Transfer);
+        // console.log(receipt.events.Transfer.returnValues.tokenId);
+        // let tokenId = receipt.events.Transfer.returnValues.tokenId;
+        console.log(receipt.events.result.returnValues.randomNum);
+        let tokenId = receipt.events.result.returnValues.randomNum;
         console.log("tokenId : ", tokenId);
         setpolygonscanUrl(
           "https://mumbai.polygonscan.com/tx/" + receipt.transactionHash
