@@ -86,14 +86,23 @@ export const StyledStartView = styled.div`
 
 export const Styledpage = styled.div`
   display: felx;
-  padding: 20px;
+  padding: 100px 10px;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   // justify-content: space-between;
-  width: 100%;
+  width: 1440px;
   min-height: 100vh;
   box-sizing: border-box;
+  background-color: #f5f6fa;
+`;
+
+export const StyledBody = styled.div`
+  display: felx;
+  width: 100%;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
   background-color: #f5f6fa;
 `;
 
@@ -119,7 +128,7 @@ export const StyledNftCard = styled.div`
 `;
 
 export const StyledNftTitle = styled.div`
-  margin: 5vh auto;
+  margin: -2vh auto 5vh;
   display: block;
   text-align: center;
   width: ${({ wd }) => (wd ? wd : "50%")};
@@ -167,4 +176,17 @@ export const StyledHashURL = styled.p`
   font-size: 20px;
   // background-color: #000;
   overflow: hidden;
+`;
+
+export const StyledNftImg = styled.div`
+  // margin: 5vh 0;
+  padding: 40px 40px;
+  display: block;
+  width: 600px;
+  height: 600px;
+  justify-content: center;
+  position: relative;
+  background-color: #fff;
+  box-shadow: 0 3px 20px rgb(0 0 0 / 16%);
+  border-radius: 40px;
 `;

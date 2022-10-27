@@ -138,8 +138,9 @@ function App() {
   });
   const [connectState, setConnectState] = useState(false);
   const [isLoading, setisLoading] = useState(false);
-  const [polygonUrl, setpolygonUrl] = useState(false);
-  const [test, setTest] = useState("");
+  const [nftState, setnftState] = useState(false);
+  const [polygonscanUrl, setpolygonscanUrl] = useState("");
+  const [nftImgSrc, setnftImgSrc] = useState("");
 
   const claimNFTs = () => {
     let cost = CONFIG.WEI_COST;
@@ -172,10 +173,16 @@ function App() {
         console.log(receipt.events.Transfer.returnValues.tokenId);
         let tokenId = receipt.events.Transfer.returnValues.tokenId;
         console.log("tokenId : ", tokenId);
-        // setTest("https://mumbai.polygonscan.com/tx/" + receipt.transactionHash);
-        setTest("https://gateway.pinata.cloud/ipfs/QmaT64tYpxj6rxmQVhAwhevqB8HCE8PKGcf8sBv8JGyF6M/" + tokenId + ".png");
+        setpolygonscanUrl(
+          "https://mumbai.polygonscan.com/tx/" + receipt.transactionHash
+        );
+        setnftImgSrc(
+          "https://gateway.pinata.cloud/ipfs/QmaT64tYpxj6rxmQVhAwhevqB8HCE8PKGcf8sBv8JGyF6M/" +
+            tokenId +
+            ".png"
+        );
         setisLoading(false); //loading이미지 출력
-        setpolygonUrl(true); //폴리곤 사이트 아이콘
+        setnftState(true); //폴리곤 사이트 아이콘
         setFeedback(
           `${CONFIG.NFT_NAME} is yours! go visit PolygonScan to view it.`
           // `NFT is yours! go visit PolygonScan to view it.`
@@ -232,50 +239,78 @@ function App() {
   };
 
   return connectState ? (
-    <s.Styledpage>
-      <s.StyledContent wd={"45%"}>
-        <s.StyledNftCard bw>{/* NFT Card Img */}</s.StyledNftCard>
-      </s.StyledContent>
-      <s.StyledContent wd={"55%"}>
-        <s.StyledNftTitle># YGBS-NFT</s.StyledNftTitle>
-        <s.StyledNftContractinfo fs={"90px"}>
-          {data.totalSupply} / {CONFIG.MAX_SUPPLY}
-        </s.StyledNftContractinfo>
-        <s.StyledNftContractinfo fs={"30px"}>
-          {CONFIG.CONTRACT_ADDRESS}
-        </s.StyledNftContractinfo>
-        <s.StyledNftContractinfo>{feedback}</s.StyledNftContractinfo>
-        <s.StyledNftContractinfo>
-          {isLoading ? (
-            <img
-              alt="now loading..."
-              src="loading.gif"
-              style={{ margin: "1rem" }}
-            />
-          ) : polygonUrl ? (
-            <s.StyledHashLink>
-              <s.StyledHashURL>
-                transactionID{" "}
-                <img src={test} alt='nft' />
-                <a href={test} target="_blank">
-                  {test}
-                </a>
-              </s.StyledHashURL>
-            </s.StyledHashLink>
-          ) : null}
-        </s.StyledNftContractinfo>
-        <s.StyledNftBuyButton
-          disabled={claimingNft ? 1 : 0}
-          onClick={(e) => {
-            e.preventDefault();
-            claimNFTs();
-            getData();
-          }}
-        >
-          {claimingNft ? "BUSY" : "BUY"}
-        </s.StyledNftBuyButton>
-      </s.StyledContent>
-    </s.Styledpage>
+    <s.StyledBody>
+      <s.Styledpage>
+        <s.StyledContent wd={"45%"}>
+          {/* <s.StyledNftCard bw> */}
+          <s.StyledNftImg>
+            {isLoading ? (
+              <img
+                alt="now loading..."
+                src="loading.gif"
+                style={{
+                  margin: "0 auto",
+                  top: "50%",
+                  left: "50%",
+                  position: "absolute",
+                  transform: "translate(-50%, -50%)",
+                }}
+              />
+            ) : nftState ? (
+              <img
+                src={nftImgSrc}
+                alt="nft"
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                  // margin: "0 auto 0",
+                }}
+              />
+            ) : null}
+          </s.StyledNftImg>
+          {/* </s.StyledNftCard> */}
+        </s.StyledContent>
+        <s.StyledContent wd={"55%"}>
+          <s.StyledNftTitle># YGBS-NFT</s.StyledNftTitle>
+          <s.StyledNftContractinfo fs={"90px"}>
+            {data.totalSupply} / {CONFIG.MAX_SUPPLY}
+          </s.StyledNftContractinfo>
+          <s.StyledNftContractinfo fs={"30px"}>
+            {CONFIG.CONTRACT_ADDRESS}
+          </s.StyledNftContractinfo>
+          <s.StyledNftContractinfo>{feedback}</s.StyledNftContractinfo>
+          <s.StyledNftContractinfo>
+            {isLoading ? (
+              <img
+                alt="now loading..."
+                src="loading.gif"
+                style={{ margin: "1rem" }}
+              />
+            ) : nftState ? (
+              <s.StyledHashLink>
+                <s.StyledHashURL>
+                  transactionID:
+                  <a href={polygonscanUrl} target="_blank">
+                    {polygonscanUrl}
+                  </a>
+                </s.StyledHashURL>
+              </s.StyledHashLink>
+            ) : null}
+          </s.StyledNftContractinfo>
+          <s.StyledNftBuyButton
+            disabled={claimingNft ? 1 : 0}
+            onClick={(e) => {
+              e.preventDefault();
+              claimNFTs();
+              getData();
+            }}
+          >
+            {claimingNft ? "BUSY" : "BUY"}
+          </s.StyledNftBuyButton>
+        </s.StyledContent>
+      </s.Styledpage>
+    </s.StyledBody>
   ) : (
     // <s.Screen>
     //   <s.Container
